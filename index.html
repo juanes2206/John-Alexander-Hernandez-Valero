@@ -1,0 +1,1476 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Nivel 40 · John Alexander Hernández Valero</title>
+    <!-- Tipografías (si no hay internet, se usan las de respaldo) -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;800;900&family=Cormorant+Garamond:ital,wght@0,500;0,700;1,500&display=swap"
+        rel="stylesheet">
+    <style>
+        /* ========== VARIABLES ========== */
+        :root {
+            --bg: #0a0a0f;
+            --card: #12121b;
+            --ink: #e8ecf4;
+            --mute: #8d95a8;
+            --blue: #00d2ff;
+            --gold: #ffcc00;
+            --wick: #d4af37;
+            --mag: #ff2bd6;
+            --red: #ff3b3b;
+            --display: 'Orbitron', 'Arial Black', system-ui, sans-serif;
+            --serif: 'Cormorant Garamond', Georgia, serif;
+            --mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0
+        }
+
+        html {
+            scroll-behavior: smooth
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--ink);
+            font: 17px/1.6 system-ui, sans-serif;
+            overflow-x: hidden;
+            background-image: radial-gradient(ellipse at 50% -10%, #0d2a3a 0, transparent 60%)
+        }
+
+        body.locked {
+            overflow: hidden
+        }
+
+        body.shake {
+            animation: shake .12s linear 6
+        }
+
+        @keyframes shake {
+            0% {
+                transform: translate(0, 0)
+            }
+
+            25% {
+                transform: translate(-4px, 3px)
+            }
+
+            50% {
+                transform: translate(4px, -3px)
+            }
+
+            75% {
+                transform: translate(-3px, -2px)
+            }
+
+            100% {
+                transform: translate(0, 0)
+            }
+        }
+
+        section {
+            padding: clamp(56px, 10vw, 110px) 20px;
+            max-width: 1000px;
+            margin: auto
+        }
+
+        h2 {
+            font: 800 clamp(1.4rem, 4.5vw, 2.2rem)/1.15 var(--display);
+            margin-bottom: 12px
+        }
+
+        .lead {
+            color: var(--mute);
+            max-width: 60ch;
+            margin-bottom: 32px
+        }
+
+        button {
+            font: inherit;
+            color: inherit;
+            cursor: pointer;
+            border: 0;
+            background: none
+        }
+
+        :focus-visible {
+            outline: 3px solid var(--blue);
+            outline-offset: 3px
+        }
+
+        #fx {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 50
+        }
+
+        /* ========== A. INTRO ========== */
+        #intro {
+            position: fixed;
+            inset: 0;
+            z-index: 100;
+            background: #05050a;
+            display: grid;
+            place-items: center;
+            text-align: center;
+            transition: opacity .8s, transform .8s
+        }
+
+        #intro.go {
+            opacity: 0;
+            transform: scale(1.4);
+            pointer-events: none
+        }
+
+        .radar {
+            position: relative;
+            width: min(78vw, 380px);
+            aspect-ratio: 1;
+            border-radius: 50%;
+            border: 2px solid var(--blue);
+            background: repeating-radial-gradient(circle, transparent 0 11%, rgba(0, 210, 255, .25) 11.5% 12%), #04121a;
+            box-shadow: 0 0 40px rgba(0, 210, 255, .4), inset 0 0 40px rgba(0, 210, 255, .25);
+            display: grid;
+            place-items: center;
+            overflow: hidden
+        }
+
+        .radar::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: conic-gradient(from 0deg, rgba(0, 210, 255, .55), transparent 25%);
+            animation: spin 3s linear infinite
+        }
+
+        .radar i {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--gold);
+            box-shadow: 0 0 12px var(--gold);
+            animation: blink 1.5s infinite
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg)
+            }
+        }
+
+        @keyframes blink {
+            50% {
+                opacity: .2
+            }
+        }
+
+        #start {
+            position: relative;
+            z-index: 2;
+            width: 62%;
+            aspect-ratio: 1;
+            border-radius: 50%;
+            font: 900 clamp(.8rem, 3.4vw, 1.05rem)/1.3 var(--display);
+            color: #1a1200;
+            background: radial-gradient(circle at 35% 30%, #fff1a8, var(--wick) 55%, #7a5d10);
+            box-shadow: 0 0 30px rgba(255, 204, 0, .6);
+            transition: transform .2s
+        }
+
+        #start:hover {
+            transform: scale(1.06)
+        }
+
+        .intro-note {
+            margin-top: 22px;
+            color: var(--mute);
+            font: 500 .85rem var(--mono)
+        }
+
+        /* ========== B. HERO ========== */
+        .hero {
+            min-height: 100svh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: center;
+            gap: 18px
+        }
+
+        .hero h1 {
+            font: 900 clamp(1.7rem, 7.2vw, 4rem)/1.1 var(--display);
+            background: linear-gradient(180deg, #fff 10%, var(--gold) 55%, #ff8a00);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            filter: drop-shadow(0 0 18px rgba(255, 204, 0, .55));
+            animation: aura 2.4s ease-in-out infinite alternate
+        }
+
+        @keyframes aura {
+            to {
+                filter: drop-shadow(0 0 34px rgba(0, 210, 255, .8))
+            }
+        }
+
+        .hero .sub {
+            font: 500 clamp(.75rem, 2.4vw, 1rem) var(--display);
+            color: var(--blue);
+            letter-spacing: .06em
+        }
+
+        .gauges {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+            align-items: stretch
+        }
+
+        .scouter {
+            background: #04140f;
+            border: 2px solid #19ff9a;
+            border-radius: 16px;
+            padding: 22px;
+            font-family: var(--mono);
+            color: #19ff9a;
+            text-align: left;
+            box-shadow: 0 0 24px rgba(25, 255, 154, .25), inset 0 0 30px rgba(25, 255, 154, .08);
+            position: relative;
+            overflow: hidden
+        }
+
+        .scouter::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient(transparent 0 3px, rgba(0, 0, 0, .25) 3px 4px);
+            pointer-events: none
+        }
+
+        .scouter small {
+            opacity: .75
+        }
+
+        #ki {
+            font: 900 clamp(1.7rem, 7vw, 2.6rem) var(--display);
+            display: block;
+            margin: 8px 0;
+            word-break: break-all
+        }
+
+        #kimsg {
+            min-height: 1.6em;
+            color: var(--gold)
+        }
+
+        .tacho {
+            background: linear-gradient(145deg, #15151f, #0b0b11);
+            border: 2px solid #2b2b3a;
+            border-radius: 16px;
+            padding: 14px;
+            display: grid;
+            place-items: center;
+            background-image: repeating-linear-gradient(45deg, rgba(255, 255, 255, .03) 0 4px, transparent 4px 8px)
+        }
+
+        .tacho svg {
+            width: 100%;
+            max-width: 280px
+        }
+
+        #needle {
+            transform-origin: 100px 100px;
+            transform: rotate(-120deg);
+            transition: transform 2.4s cubic-bezier(.2, .9, .2, 1)
+        }
+
+        /* ========== C. DRAGON BALL ========== */
+        .aura-card {
+            background: var(--card);
+            border-radius: 18px;
+            padding: 26px;
+            position: relative;
+            border: 1px solid rgba(0, 210, 255, .4);
+            box-shadow: 0 0 28px rgba(0, 210, 255, .18), 0 0 60px rgba(255, 204, 0, .08)
+        }
+
+        .balls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            justify-content: center;
+            margin: 26px 0 12px
+        }
+
+        .ball {
+            width: clamp(64px, 19vw, 92px);
+            aspect-ratio: 1;
+            border-radius: 50%;
+            filter: grayscale(1) brightness(.45);
+            transition: filter .5s, transform .3s
+        }
+
+        .ball:hover {
+            transform: translateY(-4px) scale(1.05)
+        }
+
+        .ball.on {
+            filter: none;
+            box-shadow: 0 0 26px rgba(255, 160, 0, .8)
+        }
+
+        .ball svg {
+            width: 100%;
+            height: 100%;
+            display: block
+        }
+
+        #trait {
+            min-height: 3.2em;
+            text-align: center;
+            font: 700 1.05rem var(--display);
+            color: var(--gold)
+        }
+
+        #count {
+            text-align: center;
+            color: var(--mute);
+            font-family: var(--mono);
+            font-size: .9rem
+        }
+
+        #shenlong {
+            position: fixed;
+            inset: 0;
+            z-index: 90;
+            background: rgba(2, 8, 4, .92);
+            display: none;
+            place-items: center;
+            text-align: center;
+            padding: 24px
+        }
+
+        #shenlong.show {
+            display: grid;
+            animation: fade .8s
+        }
+
+        @keyframes fade {
+            from {
+                opacity: 0
+            }
+        }
+
+        #shenlong div {
+            max-width: 560px
+        }
+
+        #shenlong h3 {
+            font: 900 clamp(1.4rem, 5vw, 2.2rem) var(--display);
+            color: #3dff8a;
+            text-shadow: 0 0 22px #3dff8a;
+            margin-bottom: 14px
+        }
+
+        #shenlong button {
+            margin-top: 22px;
+            padding: 12px 26px;
+            border-radius: 99px;
+            background: var(--gold);
+            color: #1a1200;
+            font: 800 .9rem var(--display)
+        }
+
+        /* ========== D. JOHN WICK ========== */
+        .wick {
+            background: linear-gradient(180deg, transparent, #0d0b05 20%, #0d0b05 80%, transparent);
+            max-width: none
+        }
+
+        .wick .in {
+            max-width: 1000px;
+            margin: auto
+        }
+
+        .wick h2 {
+            font-family: var(--serif);
+            font-weight: 700;
+            font-size: clamp(1.8rem, 6vw, 3rem);
+            color: var(--wick);
+            letter-spacing: .04em
+        }
+
+        .dossier {
+            display: grid;
+            grid-template-columns: 1.3fr 1fr;
+            gap: 30px;
+            align-items: center
+        }
+
+        @media(max-width:720px) {
+            .dossier {
+                grid-template-columns: 1fr
+            }
+        }
+
+        .paper {
+            background: #0a0904;
+            border: 1px solid var(--wick);
+            padding: 26px;
+            font-family: var(--serif);
+            font-size: 1.2rem;
+            position: relative;
+            box-shadow: 0 0 0 6px #0a0904, 0 0 0 7px rgba(212, 175, 55, .4)
+        }
+
+        .paper dl {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 6px 18px;
+            margin: 14px 0
+        }
+
+        .paper dt {
+            color: var(--wick)
+        }
+
+        .paper dd {
+            color: #f0e6c8
+        }
+
+        .stamp {
+            display: inline-block;
+            margin-top: 8px;
+            padding: 4px 14px;
+            border: 2px solid var(--mag);
+            color: var(--mag);
+            transform: rotate(-6deg);
+            font: 800 .85rem var(--display);
+            text-shadow: 0 0 8px var(--mag)
+        }
+
+        .coinwrap {
+            text-align: center
+        }
+
+        .coin {
+            width: min(60vw, 210px);
+            aspect-ratio: 1;
+            margin: auto;
+            position: relative;
+            transform-style: preserve-3d;
+            cursor: pointer;
+            animation: float 4s ease-in-out infinite;
+            perspective: 600px
+        }
+
+        .coin.flip {
+            animation: coinspin 1.4s cubic-bezier(.3, .7, .3, 1)
+        }
+
+        @keyframes float {
+            50% {
+                transform: translateY(-8px) rotateY(18deg)
+            }
+        }
+
+        @keyframes coinspin {
+            to {
+                transform: rotateY(1080deg)
+            }
+        }
+
+        .coin svg {
+            width: 100%;
+            height: 100%;
+            filter: drop-shadow(0 0 18px rgba(212, 175, 55, .6))
+        }
+
+        #quote {
+            margin-top: 22px;
+            min-height: 4.6em;
+            font: italic 500 1.35rem/1.35 var(--serif);
+            color: #f0e6c8
+        }
+
+        .hint {
+            color: var(--mute);
+            font: .8rem var(--mono);
+            margin-top: 10px
+        }
+
+        /* ========== E. FAST & FURIOUS ========== */
+        .ff .lead {
+            font: italic 500 1.4rem/1.35 var(--serif);
+            color: var(--ink)
+        }
+
+        .dash {
+            background: linear-gradient(145deg, #14141c, #08080c);
+            border: 1px solid #2b2b3a;
+            border-radius: 20px;
+            padding: 26px;
+            text-align: center;
+            background-image: repeating-linear-gradient(45deg, rgba(255, 255, 255, .035) 0 4px, transparent 4px 8px)
+        }
+
+        #nos {
+            padding: 16px 34px;
+            border-radius: 12px;
+            font: 900 1.05rem var(--display);
+            color: #fff;
+            background: linear-gradient(180deg, #0a7cff, #0040b8);
+            box-shadow: 0 0 28px rgba(0, 120, 255, .7), inset 0 2px 0 rgba(255, 255, 255, .4);
+            transition: transform .15s
+        }
+
+        #nos:active {
+            transform: scale(.94)
+        }
+
+        .speed {
+            height: 6px;
+            border-radius: 3px;
+            background: #1d1d29;
+            margin: 22px auto 0;
+            max-width: 420px;
+            overflow: hidden
+        }
+
+        .speed b {
+            display: block;
+            height: 100%;
+            width: 0;
+            background: linear-gradient(90deg, var(--blue), var(--red));
+            transition: width 1.4s
+        }
+
+        #timeline {
+            list-style: none;
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition: max-height 1.4s, opacity 1s;
+            text-align: left;
+            margin-top: 0;
+            border-left: 2px solid var(--blue);
+            padding-left: 24px
+        }
+
+        #timeline.open {
+            max-height: 1200px;
+            opacity: 1;
+            margin-top: 34px
+        }
+
+        #timeline li {
+            margin-bottom: 22px;
+            position: relative
+        }
+
+        #timeline li::before {
+            content: "";
+            position: absolute;
+            left: -31px;
+            top: 7px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--blue);
+            box-shadow: 0 0 12px var(--blue)
+        }
+
+        #timeline b {
+            font-family: var(--display);
+            color: var(--gold)
+        }
+
+        /* ========== F. MENSAJE FINAL ========== */
+        .term {
+            background: #07090d;
+            border: 1px solid #243040;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 0 30px rgba(0, 210, 255, .12)
+        }
+
+        .bar {
+            background: #141b26;
+            padding: 10px 14px;
+            display: flex;
+            gap: 7px;
+            align-items: center;
+            font: .8rem var(--mono);
+            color: var(--mute)
+        }
+
+        .bar i {
+            width: 11px;
+            height: 11px;
+            border-radius: 50%;
+            background: #ff5f56
+        }
+
+        .bar i:nth-child(2) {
+            background: #ffbd2e
+        }
+
+        .bar i:nth-child(3) {
+            background: #27c93f
+        }
+
+        #letter {
+            padding: 22px;
+            font: .98rem/1.7 var(--mono);
+            color: #b9ffd8;
+            white-space: pre-wrap;
+            min-height: 20em
+        }
+
+        #letter::after {
+            content: "▌";
+            animation: blink 1s steps(1) infinite
+        }
+
+        .final {
+            text-align: center
+        }
+
+        #kame {
+            margin-top: 44px;
+            padding: 20px 30px;
+            border-radius: 99px;
+            font: 900 clamp(.9rem, 3.8vw, 1.2rem) var(--display);
+            color: #001a24;
+            background: linear-gradient(180deg, #bff4ff, var(--blue));
+            box-shadow: 0 0 40px rgba(0, 210, 255, .8);
+            animation: pulse 1.6s infinite
+        }
+
+        @keyframes pulse {
+            50% {
+                box-shadow: 0 0 70px rgba(0, 210, 255, 1)
+            }
+        }
+
+        #beam {
+            position: fixed;
+            left: 0;
+            top: 50%;
+            height: 22vh;
+            width: 100%;
+            margin-top: -11vh;
+            z-index: 60;
+            pointer-events: none;
+            background: linear-gradient(90deg, #fff, var(--blue) 40%, rgba(0, 210, 255, 0));
+            border-radius: 0 50% 50% 0;
+            transform: scaleX(0);
+            transform-origin: left;
+            opacity: 0;
+            filter: blur(2px)
+        }
+
+        #beam.fire {
+            animation: beam 1.3s ease-out forwards
+        }
+
+        @keyframes beam {
+            0% {
+                transform: scaleX(0);
+                opacity: 1
+            }
+
+            60% {
+                transform: scaleX(1);
+                opacity: 1
+            }
+
+            100% {
+                transform: scaleX(1.1);
+                opacity: 0
+            }
+        }
+
+        #happy {
+            margin-top: 34px;
+            font: 900 clamp(1.5rem, 6.5vw, 3.4rem)/1.15 var(--display);
+            color: var(--gold);
+            text-shadow: 0 0 30px rgba(255, 204, 0, .8);
+            opacity: 0;
+            transform: scale(.8);
+            transition: all 1s
+        }
+
+        #happy.show {
+            opacity: 1;
+            transform: none
+        }
+
+        #mute {
+            position: fixed;
+            right: 14px;
+            bottom: 14px;
+            z-index: 70;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: #12121b;
+            border: 1px solid var(--blue);
+            font-size: 1.1rem
+        }
+
+        footer {
+            text-align: center;
+            color: var(--mute);
+            font: .8rem var(--mono);
+            padding: 30px 20px 60px
+        }
+
+        @media(prefers-reduced-motion:reduce) {
+            * {
+                animation: none !important;
+                transition-duration: .01ms !important
+            }
+        }
+
+        /* ===== V2: TEXTURAS, PERSONAJES Y MOVIMIENTO ===== */
+        #bg {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none
+        }
+
+        main,
+        footer {
+            position: relative;
+            z-index: 2
+        }
+
+        body::after {
+            content: "";
+            position: fixed;
+            inset: 0;
+            z-index: 3;
+            pointer-events: none;
+            opacity: .09;
+            mix-blend-mode: overlay;
+            background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2'/></filter><rect width='160' height='160' filter='url(%23n)'/></svg>")
+        }
+
+        #flash {
+            position: fixed;
+            inset: 0;
+            z-index: 4;
+            pointer-events: none;
+            background: radial-gradient(circle at 50% 30%, rgba(190, 245, 255, .45), rgba(0, 210, 255, .1));
+            opacity: 0;
+            transition: opacity .15s
+        }
+
+        #flash.on {
+            opacity: 1
+        }
+
+        .rv {
+            opacity: 0;
+            transform: translateY(36px) scale(.98);
+            transition: opacity .9s, transform .9s cubic-bezier(.2, .8, .2, 1)
+        }
+
+        .rv.in {
+            opacity: 1;
+            transform: none
+        }
+
+        /* Fibra de carbono real */
+        .dash,
+        .tacho {
+            background-color: #181818;
+            background-image: linear-gradient(27deg, #0e0e0e 5px, transparent 5px), linear-gradient(207deg, #0e0e0e 5px, transparent 5px), linear-gradient(27deg, #262626 5px, transparent 5px), linear-gradient(207deg, #262626 5px, transparent 5px);
+            background-size: 20px 20px;
+            background-position: 0 5px, 10px 0, 0 10px, 10px 5px
+        }
+
+        /* Oro cepillado / metal */
+        #start {
+            background-image: repeating-linear-gradient(90deg, rgba(255, 255, 255, .14) 0 1px, transparent 1px 3px), radial-gradient(circle at 35% 30%, #fff1a8, #d4af37 55%, #7a5d10)
+        }
+
+        .paper {
+            background: linear-gradient(135deg, #17130a, #0a0904 55%, #1c1608);
+            overflow: hidden
+        }
+
+        .paper::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -60%;
+            width: 40%;
+            height: 100%;
+            background: linear-gradient(100deg, transparent, rgba(255, 225, 130, .18), transparent);
+            animation: sheen 5s ease-in-out infinite
+        }
+
+        @keyframes sheen {
+            to {
+                left: 130%
+            }
+        }
+
+        .aura-card {
+            background: linear-gradient(160deg, #101a26, #0d0d16 60%, #1a1405)
+        }
+
+        .hero h1 {
+            background-size: 100% 200%;
+            animation: aura 2.4s ease-in-out infinite alternate, shim 4s linear infinite
+        }
+
+        @keyframes shim {
+            to {
+                background-position: 0 200%
+            }
+        }
+
+        .wick h2 {
+            animation: neon 4s infinite;
+            text-shadow: 0 0 12px rgba(212, 175, 55, .7), 0 0 36px rgba(255, 43, 214, .45)
+        }
+
+        @keyframes neon {
+
+            0%,
+            18%,
+            22%,
+            60%,
+            100% {
+                opacity: 1
+            }
+
+            20%,
+            62% {
+                opacity: .55
+            }
+        }
+
+        /* Goku */
+        .fig {
+            width: min(72vw, 300px);
+            margin: 0 auto;
+            animation: hov 3.2s ease-in-out infinite;
+            transition: transform .2s
+        }
+
+        .fig.sm {
+            width: 150px
+        }
+
+        .fig svg {
+            width: 100%;
+            overflow: visible;
+            filter: drop-shadow(0 0 14px rgba(255, 204, 0, .55))
+        }
+
+        @keyframes hov {
+            50% {
+                translate: 0 -14px
+            }
+        }
+
+        .aura {
+            fill: url(#ag);
+            transform-origin: center;
+            transform-box: fill-box;
+            animation: fl .45s ease-in-out infinite alternate;
+            filter: blur(7px)
+        }
+
+        @keyframes fl {
+            from {
+                transform: scale(.93, .96);
+                opacity: .65
+            }
+
+            to {
+                transform: scale(1.08, 1.05);
+                opacity: 1
+            }
+        }
+
+        .hair {
+            fill: var(--hair, #0b0b10);
+            transition: fill 1.2s
+        }
+
+        body.ssj {
+            --hair: #ffcc00
+        }
+
+        .bolts polyline {
+            fill: none;
+            stroke: #9ff3ff;
+            stroke-width: 2.2;
+            stroke-dasharray: 60;
+            animation: bolt 1.1s steps(6) infinite
+        }
+
+        .bolts polyline:nth-child(2) {
+            animation-delay: .3s
+        }
+
+        .bolts polyline:nth-child(3) {
+            animation-delay: .6s
+        }
+
+        .bolts polyline:nth-child(4) {
+            animation-delay: .15s
+        }
+
+        @keyframes bolt {
+            from {
+                stroke-dashoffset: 60
+            }
+
+            to {
+                stroke-dashoffset: -60
+            }
+        }
+
+        /* John Wick */
+        .wfig {
+            width: min(52vw, 190px);
+            margin: 0 auto 14px;
+            animation: hov 4s ease-in-out infinite
+        }
+
+        .wfig svg {
+            width: 100%;
+            overflow: visible;
+            filter: drop-shadow(-6px 0 12px rgba(0, 210, 255, .5)) drop-shadow(6px 0 12px rgba(255, 43, 214, .5))
+        }
+
+        .cglow {
+            animation: blink 1.8s ease-in-out infinite
+        }
+
+        /* Auto */
+        .road {
+            position: relative;
+            height: 130px;
+            overflow: hidden;
+            margin-bottom: 22px;
+            border-bottom: 3px solid #333;
+            background: linear-gradient(transparent 70%, rgba(0, 210, 255, .12))
+        }
+
+        .road::after {
+            content: "";
+            position: absolute;
+            bottom: 8px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: repeating-linear-gradient(90deg, #ffcc00 0 40px, transparent 40px 80px);
+            animation: lane .5s linear infinite
+        }
+
+        @keyframes lane {
+            to {
+                background-position: -80px 0
+            }
+        }
+
+        .car {
+            position: absolute;
+            bottom: 14px;
+            width: 260px;
+            animation: drive 6s linear infinite;
+            filter: drop-shadow(0 0 12px rgba(0, 210, 255, .5))
+        }
+
+        .car.nitro {
+            animation-duration: 1.4s;
+            filter: drop-shadow(-30px 0 18px #00d2ff)
+        }
+
+        @keyframes drive {
+            from {
+                left: -280px
+            }
+
+            to {
+                left: 100%
+            }
+        }
+
+        .wheel {
+            transform-box: fill-box;
+            transform-origin: center;
+            animation: spin .35s linear infinite
+        }
+    </style>
+</head>
+
+<body class="locked">
+    <canvas id="bg"></canvas>
+    <div id="flash"></div>
+    <!-- Personajes en SVG (estilo silueta con luz de borde). PERSONALIZA: cambia por tus imágenes con <img> si quieres -->
+    <svg width="0" height="0" style="position:absolute">
+        <defs>
+            <radialGradient id="ag">
+                <stop offset="0" stop-color="#fff6b0" stop-opacity=".95" />
+                <stop offset=".55" stop-color="#ffcc00" stop-opacity=".55" />
+                <stop offset="1" stop-color="#ff8a00" stop-opacity="0" />
+            </radialGradient>
+            <radialGradient id="cg">
+                <stop offset="0" stop-color="#fff1a8" />
+                <stop offset="1" stop-color="#d4af37" stop-opacity="0" />
+            </radialGradient>
+            <symbol id="goku" viewBox="0 0 200 290">
+                <g fill="#0b0b10" stroke="#ffcc00" stroke-width="2" stroke-linejoin="round">
+                    <path class="hair"
+                        d="M100 4L112 28L132 10L128 40L156 34L140 58L100 68L60 58L44 34L72 40L68 10L88 28Z" />
+                    <ellipse cx="100" cy="70" rx="19" ry="23" />
+                    <path d="M68 94L132 94L142 172L58 172Z" />
+                    <path d="M70 98L28 128L14 176L34 182L50 146L76 124Z" />
+                    <path d="M130 98L172 128L186 176L166 182L150 146L124 124Z" />
+                    <path d="M60 170L140 170L162 272L134 278L100 206L66 278L38 272Z" />
+                </g>
+                <path d="M60 160L140 160L142 172L58 172Z" fill="#00d2ff" opacity=".7" />
+            </symbol>
+            <symbol id="wick" viewBox="0 0 200 290">
+                <g fill="#07070a" stroke="#d4af37" stroke-width="2" stroke-linejoin="round">
+                    <path d="M80 40Q82 10 100 12Q120 10 120 40L118 62Q100 82 82 62Z" />
+                    <path d="M68 72L132 72L152 102L148 202L52 202L48 102Z" />
+                    <path d="M88 74L100 150L112 74Z" fill="#e8e0c8" stroke="none" opacity=".85" />
+                    <path d="M97 82L103 82L106 150L100 162L94 150Z" fill="#111" stroke="none" />
+                    <path d="M56 200L98 200L96 282L60 282Z" />
+                    <path d="M102 200L144 200L140 282L104 282Z" />
+                    <path d="M150 104L180 142L170 156L144 124Z" />
+                </g>
+            </symbol>
+        </defs>
+    </svg>
+    <canvas id="fx"></canvas>
+    <div id="beam"></div>
+    <button id="mute" aria-label="Sonido" hidden>🔊</button>
+
+    <!-- ===== A. INTRO ===== -->
+    <div id="intro">
+        <div>
+            <div class="radar"><i style="top:24%;left:62%"></i><i style="top:68%;left:30%;animation-delay:.6s"></i>
+                <button id="start">INICIAR MISIÓN:<br>NIVEL 40</button>
+            </div>
+            <p class="intro-note">Toca la moneda para detectar el Ki</p>
+        </div>
+    </div>
+
+    <main>
+        <!-- ===== B. HERO ===== -->
+        <section class="hero" id="hero">
+            <div class="fig" id="heroFig"><svg viewBox="-40 -30 280 350" role="img"
+                    aria-label="Silueta de Son Goku cargando su aura">
+                    <ellipse class="aura" cx="100" cy="150" rx="105" ry="160" />
+                    <g class="bolts">
+                        <polyline points="10,40 34,80 18,104 44,150" />
+                        <polyline points="190,40 166,86 184,110 158,158" />
+                        <polyline points="60,0 78,30 62,48" />
+                        <polyline points="140,0 124,34 142,52" />
+                    </g>
+                    <use href="#goku" width="200" height="290" />
+                </svg></div>
+            <p class="sub">12 DE NOVIEMBRE • NIVEL 40 DESBLOQUEADO</p>
+            <h1>JOHN ALEXANDER HERNÁNDEZ VALERO</h1>
+            <p class="sub">EL VERDADERO SAIYAJIN DE LA FAMILIA</p>
+            <div class="gauges">
+                <div class="scouter" aria-live="polite">
+                    <small>SCOUTER · ESCANEANDO...</small>
+                    <span id="ki">0</span>
+                    <small>NIVEL DE PODER</small>
+                    <p id="kimsg"></p>
+                </div>
+                <div class="tacho">
+                    <!-- Tacómetro SVG: escala 0–45, zona roja a partir de 36 -->
+                    <svg viewBox="0 0 200 150" role="img" aria-label="Velocímetro marcando 40 años">
+                        <path d="M30 130 A80 80 0 1 1 170 130" fill="none" stroke="#2b2b3a" stroke-width="12"
+                            stroke-linecap="round" />
+                        <path d="M153 144 A80 80 0 0 0 170 130" fill="none" stroke="var(--red)" stroke-width="12"
+                            stroke-linecap="round" opacity="0" />
+                        <path id="redzone" d="" fill="none" stroke="#ff3b3b" stroke-width="12" />
+                        <g id="ticks" stroke="#8d95a8" stroke-width="2"></g>
+                        <g id="needle">
+                            <line x1="100" y1="100" x2="100" y2="34" stroke="#ff3b3b" stroke-width="3"
+                                stroke-linecap="round" />
+                        </g>
+                        <circle cx="100" cy="100" r="9" fill="#e8ecf4" />
+                        <text x="100" y="128" text-anchor="middle" fill="#ffcc00" font-family="Orbitron,Arial"
+                            font-weight="900" font-size="22">40</text>
+                        <text x="100" y="145" text-anchor="middle" fill="#8d95a8" font-family="Orbitron,Arial"
+                            font-size="9">RPM / AÑOS</text>
+                    </svg>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== C. DRAGON BALL ===== -->
+        <section id="dbz">
+            <h2>El espíritu de un Guerrero Z</h2>
+            <p class="lead">Como Son Goku, siempre supera sus propios límites para proteger y sacar adelante a los
+                suyos. Reúne las 7 Esferas del Dragón.</p>
+            <div class="aura-card">
+                <div class="fig sm"><svg viewBox="-40 -30 280 350">
+                        <ellipse class="aura" cx="100" cy="150" rx="105" ry="160" />
+                        <use href="#goku" width="200" height="290" />
+                    </svg></div>
+                <div class="balls" id="balls"></div>
+                <p id="trait">Toca una esfera</p>
+                <p id="count">0 / 7 esferas</p>
+            </div>
+        </section>
+        <div id="shenlong">
+            <div>
+                <h3>¡SHENLONG HA APARECIDO!</h3>
+                <p>«Tu deseo será concedido: que John Alexander tenga un cumpleaños número 40 lleno de salud, risas y
+                    orgullo.»</p>
+                <button id="wishclose">Cumplir el deseo</button>
+            </div>
+        </div>
+
+        <!-- ===== D. JOHN WICK ===== -->
+        <section class="wick">
+            <div class="in">
+                <h2>Enfoque. Compromiso. Voluntad.</h2>
+                <p class="lead">«A man of focus, commitment, and sheer will.»</p>
+                <div class="dossier">
+                    <div class="paper">
+                        <b style="color:var(--wick);letter-spacing:.2em">HOTEL CONTINENTAL · REGISTRO</b>
+                        <dl>
+                            <dt>Nombre</dt>
+                            <dd>John Alexander Hernández Valero</dd>
+                            <dt>Edad</dt>
+                            <dd>40 años</dd>
+                            <dt>Estatus</dt>
+                            <dd>Leyenda intocable</dd>
+                            <dt>Juramento</dt>
+                            <dd>Su palabra vale oro</dd>
+                        </dl>
+                        <!-- PERSONALIZA: cambia los datos del dossier arriba -->
+                        <span class="stamp">MARCADOR DE SANGRE</span>
+                    </div>
+                    <div class="coinwrap">
+                        <div class="wfig"><svg viewBox="0 0 200 290" role="img"
+                                aria-label="Silueta de John Wick con la moneda del Continental">
+                                <use href="#wick" width="200" height="290" />
+                                <circle class="cglow" cx="172" cy="146" r="24" fill="url(#cg)" />
+                                <circle cx="172" cy="146" r="8" fill="#d4af37" />
+                            </svg></div>
+                        <div class="coin" id="coin" role="button" tabindex="0"
+                            aria-label="Girar moneda del Continental">
+                            <svg viewBox="0 0 200 200">
+                                <defs>
+                                    <radialGradient id="g" cx="35%" cy="30%">
+                                        <stop offset="0" stop-color="#fff1a8" />
+                                        <stop offset=".6" stop-color="#d4af37" />
+                                        <stop offset="1" stop-color="#6b520d" />
+                                    </radialGradient>
+                                </defs>
+                                <circle cx="100" cy="100" r="96" fill="url(#g)" />
+                                <circle cx="100" cy="100" r="82" fill="none" stroke="#6b520d" stroke-width="3" />
+                                <circle cx="100" cy="100" r="70" fill="none" stroke="#6b520d" stroke-width="1"
+                                    stroke-dasharray="3 5" />
+                                <text x="100" y="116" text-anchor="middle"
+                                    font-family="Cormorant Garamond,Georgia,serif" font-weight="700" font-size="64"
+                                    fill="#4a3a08">XL</text>
+                                <text x="100" y="52" text-anchor="middle" font-family="Cormorant Garamond,Georgia,serif"
+                                    font-size="14" letter-spacing="4" fill="#4a3a08">CONTINENTAL</text>
+                                <text x="100" y="156" text-anchor="middle"
+                                    font-family="Cormorant Garamond,Georgia,serif" font-size="12" letter-spacing="3"
+                                    fill="#4a3a08">BABA YAGA</text>
+                            </svg>
+                        </div>
+                        <p id="quote"></p>
+                        <p class="hint">Toca la moneda</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== E. FAST & FURIOUS ===== -->
+        <section class="ff" id="ff">
+            <h2>La familia es primero</h2>
+            <p class="lead">«Lo más importante en la vida siempre será la familia.»</p>
+            <div class="dash">
+                <div class="road"><svg class="car" id="car" viewBox="0 0 300 100">
+                        <g fill="#0a0a10" stroke="#00d2ff" stroke-width="2" stroke-linejoin="round">
+                            <path d="M10 70L24 52L80 46L112 22L190 22L230 46L284 54L292 70L290 82L10 82Z" />
+                            <path d="M118 28L186 28L214 46L96 46Z" fill="#12202c" />
+                        </g>
+                        <rect x="276" y="60" width="14" height="6" fill="#fff" />
+                        <rect x="10" y="62" width="8" height="6" fill="#ff3b3b" />
+                        <g class="wheel" style="transform-origin:70px 82px">
+                            <circle cx="70" cy="82" r="17" fill="#111" stroke="#aaa" stroke-width="3" />
+                            <path d="M70 68V96M56 82H84M60 72L80 92M80 72L60 92" stroke="#888" stroke-width="2" />
+                        </g>
+                        <g class="wheel" style="transform-origin:232px 82px">
+                            <circle cx="232" cy="82" r="17" fill="#111" stroke="#aaa" stroke-width="3" />
+                            <path d="M232 68V96M218 82H246M222 72L242 92M242 72L222 92" stroke="#888"
+                                stroke-width="2" />
+                        </g>
+                    </svg></div>
+                <button id="nos">ACTIVAR NITRO (NOS)</button>
+                <div class="speed"><b id="speedbar"></b></div>
+                <ol id="timeline">
+                    <!-- PERSONALIZA: agrega fotos con <img src="foto.jpg" alt="..."> y ajusta hitos -->
+                    <li><b>12 · NOV · 1986</b><br>Llega al mundo un futuro guerrero.</li>
+                    <li><b>Los años de entrenamiento</b><br>Esfuerzo diario, caídas y levantadas: así se forja un
+                        carácter.</li>
+                    <li><b>Forma su familia</b><br>Deja de correr por sí mismo y empieza a correr por nosotros.</li>
+                    <li><b>El piloto que nos guía</b><br>Gracias por mantener el rumbo cuando la carretera se pone
+                        difícil.</li>
+                    <li><b>12 · NOV · 2026</b><br>Nivel 40 desbloqueado. Y todavía le queda mucho motor.</li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- ===== F. MENSAJE FINAL ===== -->
+        <section class="final" id="final">
+            <h2>De hijo a padre</h2>
+            <div class="term" style="text-align:left;margin-top:24px">
+                <div class="bar"><i></i><i></i><i></i><span style="margin-left:8px">hijo@familia:~$ cat
+                        para_papa.txt</span></div>
+                <div id="letter"></div>
+            </div>
+            <button id="kame">¡KAMEHAMEHA DE CUMPLEAÑOS!</button>
+            <h2 id="happy">¡FELICES 40 AÑOS,<br>PAPÁ JOHN ALEXANDER!</h2>
+        </section>
+    </main>
+    <footer>Hecho con orgullo por tu hijo · 12 de noviembre</footer>
+
+    <script>
+        /* ========== UTILIDADES ========== */
+        const $ = s => document.querySelector(s);
+        const wait = ms => new Promise(r => setTimeout(r, ms));
+
+        /* ========== AUDIO (Web Audio API, sin archivos externos) ========== */
+        let ac, master, muted = false;
+        function initAudio() {
+            ac = new (window.AudioContext || window.webkitAudioContext)();
+            master = ac.createGain(); master.gain.value = .5; master.connect(ac.destination);
+            // Pad ambiental suave: acorde menor con LFO
+            [55, 82.4, 110, 130.8].forEach((f, i) => {
+                const o = ac.createOscillator(), g = ac.createGain(), l = ac.createOscillator(), lg = ac.createGain();
+                o.type = 'sawtooth'; o.frequency.value = f; g.gain.value = .018;
+                l.frequency.value = .1 + i * .05; lg.gain.value = .01; l.connect(lg); lg.connect(g.gain);
+                const flt = ac.createBiquadFilter(); flt.type = 'lowpass'; flt.frequency.value = 500;
+                o.connect(flt); flt.connect(g); g.connect(master); o.start(); l.start();
+            });
+        }
+        function tone(f, d = .3, type = 'sine', v = .2, slide = 0) {
+            if (!ac || muted) return;
+            const o = ac.createOscillator(), g = ac.createGain(), t = ac.currentTime;
+            o.type = type; o.frequency.setValueAtTime(f, t);
+            if (slide) o.frequency.exponentialRampToValueAtTime(Math.max(20, f + slide), t + d);
+            g.gain.setValueAtTime(v, t); g.gain.exponentialRampToValueAtTime(.001, t + d);
+            o.connect(g); g.connect(master); o.start(); o.stop(t + d);
+        }
+        $('#mute').onclick = e => { muted = !muted; master.gain.value = muted ? 0 : .5; e.target.textContent = muted ? '🔇' : '🔊'; };
+
+        /* ========== PARTÍCULAS Y CONFETI (canvas propio) ========== */
+        const cv = $('#fx'), cx = cv.getContext('2d'); let parts = [];
+        function size() { cv.width = innerWidth; cv.height = innerHeight; } size(); addEventListener('resize', size);
+        function burst(x, y, colors, n = 60, speed = 7, grav = .15, life = 70) {
+            for (let i = 0; i < n; i++) {
+                const a = Math.random() * 6.283, s = Math.random() * speed;
+                parts.push({ x, y, vx: Math.cos(a) * s, vy: Math.sin(a) * s - 2, g: grav, l: life + Math.random() * 30, c: colors[i % colors.length], r: 2 + Math.random() * 3 });
+            }
+        }
+        function rain(colors, n = 160) {
+            for (let i = 0; i < n; i++) parts.push({ x: Math.random() * cv.width, y: -20 - Math.random() * 300, vx: Math.random() * 2 - 1, vy: 2 + Math.random() * 4, g: .02, l: 260, c: colors[i % colors.length], r: 3 + Math.random() * 4 });
+        }
+        (function loop() {
+            cx.clearRect(0, 0, cv.width, cv.height);
+            parts = parts.filter(p => p.l-- > 0);
+            parts.forEach(p => {
+                p.vy += p.g; p.x += p.vx; p.y += p.vy;
+                cx.globalAlpha = Math.min(1, p.l / 30); cx.fillStyle = p.c;
+                cx.fillRect(p.x, p.y, p.r, p.r * 1.6);
+            });
+            requestAnimationFrame(loop);
+        })();
+        const BLUE = ['#00d2ff', '#7df3ff', '#ffffff'], GOLD = ['#ffcc00', '#ffe680', '#d4af37', '#ff8a00', '#00d2ff', '#ff2bd6'];
+
+        /* ========== TACÓMETRO: marcas y zona roja ========== */
+        (function gauge() {
+            const pt = (v, r) => { const a = (-210 + v / 45 * 240) * Math.PI / 180; return [100 + r * Math.cos(a), 100 + r * Math.sin(a)]; };
+            let t = ''; for (let v = 0; v <= 45; v += 5) { const [x1, y1] = pt(v, 68), [x2, y2] = pt(v, 56); t += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}"/>`; }
+            $('#ticks').innerHTML = t;
+            const [a, b] = pt(36, 80), [c, d] = pt(45, 80);
+            $('#redzone').setAttribute('d', `M${a} ${b} A80 80 0 0 1 ${c} ${d}`);
+        })();
+
+        /* ========== A. INICIO DE LA MISIÓN ========== */
+        $('#start').onclick = async () => {
+            initAudio(); $('#mute').hidden = false;
+            tone(80, 1.2, 'sawtooth', .25, 600); tone(440, .6, 'square', .08, 880);
+            $('#intro').classList.add('go'); document.body.classList.add('ssj'); document.body.classList.remove('locked');
+            burst(innerWidth / 2, innerHeight / 2, BLUE.concat(['#ffcc00']), 120, 12);
+            document.body.classList.add('shake'); setTimeout(() => document.body.classList.remove('shake'), 800);
+            await wait(500); startScouter();
+        };
+
+        /* ========== B. SCOUTER + TACÓMETRO ========== */
+        function startScouter() {
+            $('#needle').style.transform = 'rotate(120deg)';        // 40 de 45 → zona roja
+            const el = $('#ki'), target = 40000000, t0 = performance.now(), dur = 3200;
+            (function tick(now) {
+                const p = Math.min(1, (now - t0) / dur), e = 1 - Math.pow(1 - p, 4);
+                el.textContent = Math.floor(e * target).toLocaleString('es-CO');
+                if (p % .08 < .02) tone(300 + p * 900, .06, 'square', .04);
+                if (p < 1) requestAnimationFrame(tick);
+                else { el.textContent = '40.000.000+'; $('#kimsg').textContent = '¡Su nivel de Ki es impresionante!'; tone(880, .5, 'triangle', .15); }
+            })(t0);
+        }
+
+        /* ========== C. ESFERAS DEL DRAGÓN ========== */
+        const TRAITS = ['Valentía', 'Sabiduría', 'Lealtad', 'Fuerza', 'Dedicación', 'Resiliencia', 'El mejor padre'];
+        const STARS = { // posiciones de estrellas (en un viewBox 100x100)
+            1: [[50, 50]], 2: [[38, 50], [62, 50]], 3: [[50, 34], [36, 60], [64, 60]], 4: [[38, 38], [62, 38], [38, 62], [62, 62]],
+            5: [[50, 30], [30, 46], [70, 46], [38, 70], [62, 70]], 6: [[36, 32], [64, 32], [28, 52], [72, 52], [38, 72], [62, 72]],
+            7: [[50, 26], [30, 40], [70, 40], [26, 62], [74, 62], [40, 76], [60, 76]]
+        };
+        const star = (x, y) => { // estrella de 5 puntas en SVG
+            let p = ''; for (let i = 0; i < 10; i++) { const r = i % 2 ? 4.2 : 10, a = i * Math.PI / 5 - Math.PI / 2; p += `${x + r * Math.cos(a)},${y + r * Math.sin(a)} `; }
+            return `<polygon points="${p}" fill="#c1121f"/>`;
+        };
+        const found = new Set();
+        TRAITS.forEach((tr, i) => {
+            const n = i + 1, b = document.createElement('button');
+            b.className = 'ball'; b.setAttribute('aria-label', `Esfera de ${n} estrellas`);
+            b.innerHTML = `<svg viewBox="0 0 100 100"><defs><radialGradient id="b${n}" cx="35%" cy="30%"><stop offset="0" stop-color="#fff3b0"/><stop offset=".5" stop-color="#ff9d00"/><stop offset="1" stop-color="#b34700"/></radialGradient></defs>
+    <circle cx="50" cy="50" r="48" fill="url(#b${n})"/><ellipse cx="34" cy="28" rx="14" ry="8" fill="#fff" opacity=".35"/>${STARS[n].map(s => star(...s)).join('')}</svg>`;
+            const show = () => { $('#trait').textContent = `${n} ★ ${tr}`; };
+            b.onmouseenter = () => { if (b.classList.contains('on')) show(); };
+            b.onclick = () => {
+                show(); tone(300 + n * 90, .4, 'triangle', .2);
+                if (!b.classList.contains('on')) {
+                    b.classList.add('on'); found.add(n); $('#count').textContent = `${found.size} / 7 esferas`;
+                    const r = b.getBoundingClientRect(); burst(r.left + r.width / 2, r.top + r.height / 2, ['#ffcc00', '#ff9d00', '#fff'], 30, 5);
+                    if (found.size === 7) setTimeout(summon, 700);
+                }
+            };
+            $('#balls').appendChild(b);
+        });
+        function summon() {
+            $('#shenlong').classList.add('show'); tone(60, 2, 'sawtooth', .3, 200);
+            [0, 300, 600].forEach(d => setTimeout(() => tone(523 + d, .6, 'triangle', .15), d));
+            rain(GOLD, 120);
+        }
+        $('#wishclose').onclick = () => $('#shenlong').classList.remove('show');
+
+        /* ========== D. MONEDA DEL CONTINENTAL ========== */
+        const coin = $('#coin');
+        const flipCoin = () => {
+            coin.classList.remove('flip'); void coin.offsetWidth; coin.classList.add('flip');
+            tone(1800, .5, 'sine', .15, -400); setTimeout(() => tone(2400, .8, 'sine', .1, -600), 350);
+            $('#quote').textContent = '«40 años de impecable trayectoria. Siempre cumpliendo su palabra.»';
+        };
+        coin.onclick = flipCoin; coin.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') flipCoin(); };
+
+        /* ========== E. NITRO (NOS) ========== */
+        $('#nos').onclick = () => {
+            const r = $('#nos').getBoundingClientRect();
+            document.body.classList.add('shake'); setTimeout(() => document.body.classList.remove('shake'), 800);
+            burst(r.left + r.width / 2, r.top + r.height / 2, BLUE, 140, 13, .08, 60);
+            tone(120, 1.4, 'sawtooth', .22, 900); tone(60, 1.6, 'square', .1, 300);
+            $('#speedbar').style.width = '100%'; $('#car').classList.add('nitro'); nitro = true; setTimeout(() => { nitro = false; $('#car').classList.remove('nitro'); }, 5000); $('#timeline').classList.add('open');
+        };
+
+        /* ========== F. CARTA (efecto máquina de escribir) ========== */
+        /* PERSONALIZA ESTE TEXTO con tus propias palabras */
+        const LETTER = `> Compilando 40 años de recuerdos...
+> Estado: 100% completado. Sin errores.
+
+Papá,
+
+Hoy no hay mejor commit que decirte gracias.
+Gracias por cada enseñanza, por cada esfuerzo que
+casi nadie vio y por el ejemplo que me diste sin
+pedirme nada a cambio.
+
+Aprendí de ti que la fuerza de Goku no está en los
+golpes, sino en levantarse una vez más. Que la
+palabra de un hombre vale como una moneda de oro.
+Y que, como dice Toretto, lo más importante
+siempre será la familia.
+
+Eres mi héroe, mi piloto y mi guerrero Z favorito.
+
+Con todo mi amor,
+Tu hijo.`;
+        let typed = false;
+        new IntersectionObserver(async (en, ob) => {
+            if (!en[0].isIntersecting || typed) return; typed = true; ob.disconnect();
+            const box = $('#letter'); for (const ch of LETTER) { box.textContent += ch; if (ch !== ' ') tone(900 + Math.random() * 300, .02, 'square', .015); await wait(ch === '\n' ? 90 : 28); }
+        }, { threshold: .3 }).observe($('#letter'));
+
+        /* ========== KAMEHAMEHA FINAL ========== */
+        $('#kame').onclick = async () => {
+            tone(200, 1, 'sine', .2, 600); await wait(700);
+            $('#beam').classList.add('fire'); tone(90, 1.4, 'sawtooth', .3, 700);
+            document.body.classList.add('shake'); await wait(900);
+            document.body.classList.remove('shake'); $('#beam').classList.remove('fire');
+            rain(GOLD, 260); burst(innerWidth / 2, innerHeight / 2, GOLD.concat(BLUE), 220, 15, .12, 100);
+            [523, 659, 784, 1047].forEach((f, i) => setTimeout(() => tone(f, .6, 'triangle', .15), i * 160));
+            $('#happy').classList.add('show'); $('#happy').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        };
+
+        /* ========== V2: FONDO ANIMADO POR SECCIÓN ========== */
+        let nitro = false, mode = 'ki';
+        const bg = $('#bg'), bx = bg.getContext('2d'); let W, H;
+        const rs = () => { W = bg.width = innerWidth; H = bg.height = innerHeight; }; rs(); addEventListener('resize', rs);
+        const P = Array.from({ length: 150 }, () => ({ x: Math.random() * W, y: Math.random() * H, z: Math.random() * 2 + .5, l: Math.random() }));
+        const MC = { ki: ['#ffcc00', '#00d2ff'], wick: ['#00d2ff', '#ff2bd6'], ff: ['#00d2ff', '#ffffff'] };
+        (function frame() {
+            bx.clearRect(0, 0, W, H);
+            P.forEach((p, i) => {
+                const c = MC[mode][i % 2]; bx.strokeStyle = bx.fillStyle = c; bx.globalAlpha = .25 + p.l * .5;
+                if (mode === 'ki') { p.y -= p.z * .8; p.x += Math.sin(p.y / 40 + i) * .4; bx.fillRect(p.x, p.y, p.z * 1.6, p.z * 1.6); if (p.y < -5) { p.y = H + 5; p.x = Math.random() * W; } }
+                else if (mode === 'wick') { p.y += p.z * 9; p.x -= 1.5; bx.lineWidth = 1; bx.beginPath(); bx.moveTo(p.x, p.y); bx.lineTo(p.x + 4, p.y - 18 * p.z); bx.stroke(); if (p.y > H) { p.y = -20; p.x = Math.random() * W + 100; } }
+                else { p.x -= p.z * (nitro ? 42 : 14); bx.lineWidth = 1.2; bx.beginPath(); bx.moveTo(p.x, p.y); bx.lineTo(p.x + p.z * (nitro ? 90 : 40), p.y); bx.stroke(); if (p.x < -120) { p.x = W + 10; p.y = Math.random() * H; } }
+            });
+            requestAnimationFrame(frame);
+        })();
+        const MAP = [['#hero', 'ki'], ['#dbz', 'ki'], ['.wick', 'wick'], ['#ff', 'ff'], ['#final', 'ki']];
+        const mo = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) mode = e.target.dataset.m; }), { threshold: .35 });
+        MAP.forEach(([q, m]) => { const el = $(q); el.dataset.m = m; mo.observe(el); });
+
+        /* Aparición al hacer scroll */
+        const ro = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); ro.unobserve(e.target); } }), { threshold: .15 });
+        document.querySelectorAll('h2,.lead,.aura-card,.paper,.coinwrap,.dash,.term').forEach(e => { e.classList.add('rv'); ro.observe(e); });
+
+        /* Goku sigue el cursor + estela dorada + relámpagos */
+        addEventListener('pointermove', e => {
+            $('#heroFig').style.transform = `translate(${(e.clientX / innerWidth - .5) * 24}px,${(e.clientY / innerHeight - .5) * 14}px)`;
+            if (Math.random() < .35) burst(e.clientX, e.clientY, GOLD, 2, 1.6, .04, 26);
+        });
+        (function storm() {
+            setTimeout(() => { if (mode === 'ki') { $('#flash').classList.add('on'); tone(70, .6, 'sawtooth', .12, -30); setTimeout(() => $('#flash').classList.remove('on'), 140); } storm(); }, 4000 + Math.random() * 5000);
+        })();
+    </script>
+</body>
+
+</html>
